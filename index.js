@@ -28,8 +28,6 @@ module.exports = function(ret, conf, settings, opt){
         
         //判断当前处理文件是否为图片
         if(file.isImage() && !/^_/.test(file.basename)){
-            //file.getUrl，可以获取打包之后的绝对路径
-            //map[subpath.replace("/src/","")] = file.getUrl(opt.hash, opt.domain);
             
             if(file.rExt == '.jpg'){
 				if(file.release){
@@ -38,19 +36,17 @@ module.exports = function(ret, conf, settings, opt){
 					new_img_folder = file.dirname;
 				}
 
-                //所有的jpg都生成对应的一个webp格式图
-                new Imagemin()
-                    .src(file.fullname)   //'src/img/xxx.jpg'
-					.dest(new_img_folder)	//新文件夹
-                    .use(imageminWebp({quality: quality}))           //压缩比
-                    .run(function (err, files){
-                        var newpath;
-                        if(file.useHash){
-                            newpath = files[0].path.replace(file.filename,file.getHash()); //生成带md5的webp图片路径
-                            fs.rename(files[0].path, newpath,function(){});
-                        }
-
-                    });
+				Imagemin([file.fullname], new_img_folder, {
+					use: [
+						imageminWebp({quality: quality})
+					]
+				}).then(files => {
+					var newpath;
+					if(file.useHash){
+						newpath = files[0].path.replace(file.filename,file.getHash()); //生成带md5的webp图片路径
+						fs.rename(files[0].path, newpath,function(){});
+					}
+				});
             }
         }
         //处理css文件

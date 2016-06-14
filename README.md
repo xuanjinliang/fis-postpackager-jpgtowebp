@@ -21,7 +21,7 @@
     
     //fis3配置
     .match('::package', {
-        prepackager: fis.plugin('jpgtowebp',{
+        postpackager: fis.plugin('jpgtowebp',{
             quality: 60
         })
     })
