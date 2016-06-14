@@ -1,0 +1,28 @@
+{
+  "name": "fis-postpackager-jpgtowebp",
+  "version": "0.0.1",
+  "description": "fis插件jpg转webp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuanjinliang/fis-postpackager-jpgtowebp.git"
+  },
+  "keywords": [
+    "fis",
+    "webp"
+  ],
+  "author": "jinjin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuanjinliang/fis-postpackager-jpgtowebp/issues"
+  },
+  "homepage": "https://github.com/xuanjinliang/fis-postpackager-jpgtowebp#readme",
+  "dependencies": {
+    "imagemin": "^5.2.1",
+    "imagemin-webp": "^4.0.0",
+    "uglify-js": "^2.6.2"
+  }
+}
