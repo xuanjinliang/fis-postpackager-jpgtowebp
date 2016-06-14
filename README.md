@@ -1,7 +1,7 @@
 ### 安装
 
 ```javascript
-   npm install fis-postpackager-jpg-towebp
+   npm install fis-postpackager-jpgtowebp
 ```
 
 ### 使用
@@ -9,7 +9,7 @@
 ```javascript
     //fis2配置
     modules : {
-    	postpackager : 'jpg-towebp'
+    	postpackager : 'jpgtowebp'
     },
     settings : {
     	postpackager : {
@@ -21,7 +21,7 @@
     
     //fis3配置
     .match('::package', {
-        prepackager: fis.plugin('jpg-towebp',{
+        prepackager: fis.plugin('jpgtowebp',{
             quality: 60
         })
     })
