@@ -51,7 +51,7 @@ module.exports = function(ret, conf, settings, opt){
         }
         //处理css文件
         else if(file.isCssLike && file.ext == '.css'){
-            replaceAllJPG(file.getContent(), file, dirPath + file.release.replace(/\/\w*\.css$/,''));
+            replaceAllJPG(file.getContent(), file, dirPath + file.release.replace(/\/[^\/]+\.css$/,''));
         }
         //处理html文件
         else if(file.isHtmlLike){
@@ -67,8 +67,8 @@ module.exports = function(ret, conf, settings, opt){
         var pkgs = {};
 
         if(pkg.id.indexOf(".css") > -1 ){
-            pkgs[pkg.id] = ret.map.pkg["p"+index];
-            replaceAllJPG(pkg._content, pkg, dirPath + pkg.release.replace(/\/\w*\.css$/,''));
+            pkgs[pkg.id] = ret.map.pkg["p"+index];			
+            replaceAllJPG(pkg._content, pkg, dirPath + pkg.release.replace(/\/[^\/]+\.css$/,''));
         }
 
     });
