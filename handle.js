@@ -3,7 +3,10 @@
     var data_attri,
         funs = [],
         d = document;
-
+	
+	var html = document.getElementsByTagName('html')[0];
+	html.style.visibility = 'hidden';
+		
     check_webp_feature(function(result){
         
         data_attri = result ? 'data-webpNew' : 'data-webpOriginal';
@@ -12,6 +15,7 @@
         ready(function(){
             //console.log('dom加载完成');
             assign('src', document.getElementsByTagName('img'));
+			html.setAttribute('style',html.getAttribute('style').replace(/visibility.+;/g,""));
         });
         
     });
