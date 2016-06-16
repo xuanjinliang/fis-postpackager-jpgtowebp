@@ -41,9 +41,9 @@ module.exports = function(ret, conf, settings, opt){
 						imageminWebp({quality: quality})
 					]
 				}).then(files => {
-					var newpath;
 					if(file.useHash){
-						newpath = files[0].path.replace(file.filename,file.getHash()); //生成带md5的webp图片路径
+						var hash = fis.media().get('project.md5Connector', '_') + file.getHash(),
+							newpath = files[0].path.replace(file.filename,hash); //生成带md5的webp图片路径
 						fs.rename(files[0].path, newpath,function(){});
 					}
 				});
@@ -55,7 +55,7 @@ module.exports = function(ret, conf, settings, opt){
         }
         //处理html文件
         else if(file.isHtmlLike){
-
+		
             //处理页面，替换图片和样式地址
             htmlHandle(file.getContent(), file);
         }
@@ -108,7 +108,6 @@ function replaceAllJPG(css_content, file, subpath){
 //处理html
 function htmlHandle(content, file){
     var reg =/<(img)\s+[\s\S]*?\/?>\s*|<(link)\s+[\s\S]*?["'\s\w\/]>\s*/ig;
-
     content = content.replace(reg, function (m, $1, $2, $3) {
         var result,
             string = '',
@@ -159,8 +158,8 @@ function htmlHandle(content, file){
         }
         return m;
     });
-
-    content = content.replace(/<head\s*>[\s\S]*?<\/(head)>/i,function(m, $1){
+	
+    content = content.replace(/<head[\s\S]*>[\s\S]*?<\/(head)>/i,function(m, $1){
         var result;
         if($1){
             //return m+webpJs();
