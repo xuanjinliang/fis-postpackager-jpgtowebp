@@ -43,14 +43,18 @@
 
         if (funs.push(fn) > 1) return;
 
-        if(d.addEventListener) {
-
-            d.addEventListener('DOMContentLoaded', function() {
-                //注销事件, 避免反复触发
-                d.removeEventListener('DOMContentLoaded',arguments.callee, false);
-                fn();            //执行函数
-            }, false);
-
+        if(d.addEventListener) {		
+			var runFun = function(){
+				fn();	//执行函数
+				//注销事件, 避免反复触发
+				d.removeEventListener('DOMContentLoaded',runFun, false);
+			}
+		
+			if (/complete|loaded|interactive/.test(d.readyState) && d.body){
+				fn();
+			}else {
+				d.addEventListener('DOMContentLoaded', runFun, false)
+			}
         }else if(d.attachEvent) {        //IE
 
             //使用doScroll方法来检测DOM树是否渲染完成
@@ -78,9 +82,4 @@
         }
         
     }
-
-
 })();
-
-
-

@@ -1,6 +1,6 @@
 {
   "name": "fis-postpackager-jpgtowebp",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "fis插件jpg转webp",
   "main": "index.js",
   "scripts": {
