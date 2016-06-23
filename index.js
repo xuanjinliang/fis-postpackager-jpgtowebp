@@ -159,14 +159,9 @@ function htmlHandle(content, file){
         return m;
     });
 	
-    content = content.replace(/<head[\s\S]*>[\s\S]*?<\/(head)>/i,function(m, $1){
-        var result;
+    content = content.replace(/<head[^>]*>[\s\S]*(<\/head>)/i,function(m, $1){
         if($1){
-            //return m+webpJs();
-            result = m.match(/<(link)\s+[\s\S]*?["'\s\w\/]>/ig);
-            if(result){
-                return m.replace(result[result.length-1], result[result.length-1]+webpJs());
-            }
+			return m.replace($1,webpJs()+$1);
         }
     });
 
