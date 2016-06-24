@@ -1,6 +1,6 @@
 {
   "name": "fis-postpackager-jpgtowebp",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "fis插件jpg转webp",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/xuanjinliang/fis-postpackager-jpgtowebp#readme",
   "dependencies": {
-    "imagemin": "^5.2.1",
-    "imagemin-webp": "^4.0.0",
+    "webp-bin": "^0.1.4",
     "uglify-js": "^2.6.2"
   }
 }

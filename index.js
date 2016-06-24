@@ -3,9 +3,8 @@
  * http://fis.baidu.com/
  */
 'use strict';
-
-var Imagemin = require('imagemin');
-var imageminWebp = require('imagemin-webp');
+var execFile = require('child_process').execFile;
+var binPath = require('webp-bin').path;
 var fs=require('fs');
 var UglifyJS = require("uglify-js");
 
@@ -13,7 +12,7 @@ module.exports = function(ret, conf, settings, opt){
     //ret，打包文件列表的对象
     //conf，参数配置对象
     //settings和opt都用不上
-     
+	
     var dirPath = fis.project.getProjectPath();
 
     //用fis的api来循环遍历每个打包的文件，获取需要的打包文件列表
@@ -36,17 +35,13 @@ module.exports = function(ret, conf, settings, opt){
 					new_img_folder = file.dirname;
 				}
 
-				Imagemin([file.fullname], new_img_folder, {
-					use: [
-						imageminWebp({quality: quality})
-					]
-				}).then(files => {
-					if(file.useHash){
-						var hash = fis.media().get('project.md5Connector', '_') + file.getHash(),
-							newpath = files[0].path.replace(file.filename,hash); //生成带md5的webp图片路径
-						fs.rename(files[0].path, newpath,function(){});
+				var hash = new_img_folder + fis.media().get('project.md5Connector', '_') + file.getHash();
+				execFile(binPath, (file.fullname + ' -q ' + quality +' -o ' + hash+'.webp').split(/\s+/), function(err, stdout, stderr) {
+					if(err){
+						console.log(err);
 					}
 				});
+
             }
         }
         //处理css文件
