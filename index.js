@@ -3,22 +3,10 @@
  * http://fis.baidu.com/
  */
 'use strict';
-var path = require('path');
 var execFile = require('child_process').execFile;
+var cwebp = require('cwebp-binLocal');
 var fs=require('fs');
 var UglifyJS = require("uglify-js");
-
-var pathUrl = '';
-if (process.platform === 'darwin') {
-	pathUrl = path.join(__dirname, '/vendor/osx','cwebp');
-} else if (process.platform === 'linux') {
-	pathUrl = path.join(__dirname, process.arch === 'x64'?'/vendor/linux/x64':'/vendor/linux/x86','cwebp');
-} else if (process.platform === 'win32') {
-	pathUrl = path.join(__dirname, process.arch === 'x64'?'/vendor/win/x64':'/vendor/win/x86','cwebp.exe');
-} else {
-	console.log('Unsupported platform:', process.platform, process.arch);
-	return;
-}
 
 module.exports = function(ret, conf, settings, opt){
     //ret，打包文件列表的对象
@@ -48,11 +36,15 @@ module.exports = function(ret, conf, settings, opt){
 				}
 
 				var hash = new_img_folder + fis.media().get('project.md5Connector', '_') + file.getHash();
-				execFile(pathUrl, (file.fullname + ' -q ' + quality +' -o ' + hash+'.webp').split(/\s+/), function(err, stdout, stderr) {
+				if(!fis.util.isDir(new_img_folder)){
+					fis.util.mkdir(new_img_folder);
+				}
+				execFile(cwebp, (file.fullname + ' -q ' + quality +' -o ' + hash+'.webp').split(/\s+/), function(err, stdout, stderr) {
 					if(err){
 						console.log(err);
 					}
 				});
+
             }
         }
         //处理css文件
