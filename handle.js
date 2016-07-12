@@ -27,7 +27,7 @@
 	});
 	
 	function display(){
-		html.setAttribute('style', html.getAttribute('style').replace(/visibility.+;/g, ""));
+		html.setAttribute('style', html.getAttribute('style').replace(/visibility[^;]+;/g, ""));
 	}
 
 	function check_webp_feature(callback) {
